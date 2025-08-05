@@ -13,7 +13,7 @@ type Controller struct {
 	Service ServiceInterface
 }
 
-func NewController(svc *Service) *Controller {
+func NewController(svc ServiceInterface) *Controller {
 	return &Controller{
 		Service: svc,
 	}
