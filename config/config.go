@@ -21,8 +21,8 @@ func app() {
 	conf("DEBUG", "false")
 
 	conf("DB_HOST", "localhost")
-	conf("DB_PORT", "3306")
-	conf("DB_DATABASE", "testdb")
+	conf("DB_PORT", "5432")
+	conf("DB_DATABASE", "postgres")
 	conf("DB_USER", "root")
 	conf("DB_PASSWORD", "secret")
 
