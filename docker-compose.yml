@@ -1,0 +1,39 @@
+version: "3.9"
+
+services:
+  postgres:
+    image: postgres:latest
+    ports:
+      - "5432:5432"
+    environment:
+      - POSTGRES_USER=root
+      - POSTGRES_PASSWORD=secret
+    healthcheck:
+      test: ["CMD", "pg_isready"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+
+  main:
+    build:
+      dockerfile: Dockerfile
+    ports:
+      - "8080:8080"
+    command: http
+    environment:
+      - DEBUG=true
+      - PORT=8080
+      - DB_HOST=postgres
+      - DB_PORT=5432
+      - DB_DATABASE=postgres
+      - DB_USER=root
+      - DB_PASSWORD=secret
+      - JWT_SECRET=secret
+      - JWT_DURATION=720
+      - HTTP_JSON_NAMING=camel_case
+    depends_on:
+      postgres:
+        condition: service_healthy
+
+volumes:
+  postgres:
