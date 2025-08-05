@@ -195,13 +195,12 @@ Content-Type: application/json
 
 ### Patient Endpoints
 
-> **Note**: All patient endpoints require authentication
+> **Note**: List patient endpoints require authentication
 
 #### Get Patient by ID
 
 ```http
 GET /patient/{id}
-Authorization: Bearer <jwt-token>
 ```
 
 #### List Patients
