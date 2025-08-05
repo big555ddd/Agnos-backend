@@ -49,7 +49,6 @@ func (c *Controller) List(ctx *gin.Context) {
 		response.BadRequest(ctx, message.InvalidRequest, nil)
 		return
 	}
-	logger.Info(req)
 	user, _ := helper.GetUserByToken(ctx)
 	data, total, err := c.Service.List(ctx, &req, user.Data.Hospital)
 	if err != nil {

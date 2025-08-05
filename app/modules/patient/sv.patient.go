@@ -3,7 +3,6 @@ package patient
 import (
 	"app/app/model"
 	patientdto "app/app/modules/patient/dto"
-	"app/internal/logger"
 	"fmt"
 	"net/http"
 	"strings"
@@ -40,7 +39,6 @@ func (s *Service) List(ctx context.Context, req *patientdto.ListPatientRequest, 
 		offset = (req.Page - 1) * req.Size
 		limit  = req.Size
 	)
-	logger.Info(req)
 
 	query := s.db.NewSelect().
 		Model(&resp).
