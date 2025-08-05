@@ -137,8 +137,6 @@ func Success(ctx *gin.Context, data any) {
 	ctx.JSON(http.StatusOK, marshalled)
 }
 
-
-
 // InternalError ส่งผลลัพธ์เมื่อมีข้อผิดพลาดภายใน
 func InternalError(ctx *gin.Context, message any, data any) {
 	response := Response{
@@ -199,28 +197,16 @@ func SuccessWithPaginate(ctx *gin.Context, data any, page, size, count int) {
 		Total: count,
 	}
 
-	if pagination.Total == 0 {
-		response := ResponsePaginate0{
-			Code:       200,
-			Message:    "Success",
-			Data:       []any{},
-			Pagination: gin.H{},
-		}
-
-		marshalled := NewConventionalMarshaller(response)
-		ctx.JSON(http.StatusOK, marshalled)
-		return
-	} else {
-		response := ResponsePaginate{
-			Code:       200,
-			Message:    "Success",
-			Data:       data,
-			Pagination: pagination,
-		}
-
-		marshalled := NewConventionalMarshaller(response)
-		ctx.JSON(http.StatusOK, marshalled)
+	response := ResponsePaginate{
+		Code:       200,
+		Message:    "Success",
+		Data:       data,
+		Pagination: pagination,
 	}
+
+	marshalled := NewConventionalMarshaller(response)
+	ctx.JSON(http.StatusOK, marshalled)
+
 }
 
 func Forbidden(ctx *gin.Context, message any, data any) {

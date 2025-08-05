@@ -6,6 +6,8 @@ import (
 	patientdto "app/app/modules/patient/dto"
 	"app/app/response"
 	"app/internal/logger"
+	"encoding/json"
+	"net/http"
 
 	"github.com/gin-gonic/gin"
 )
@@ -34,7 +36,18 @@ func (c *Controller) GetPatient(ctx *gin.Context) {
 		return
 	}
 	defer resp.Body.Close()
-	ctx.DataFromReader(resp.StatusCode, resp.ContentLength, resp.Header.Get("Content-Type"), resp.Body, nil)
+	if resp.StatusCode != http.StatusOK {
+		ctx.DataFromReader(resp.StatusCode, resp.ContentLength, resp.Header.Get("Content-Type"), resp.Body, nil)
+		return
+	}
+	//decoding the response body
+	var patientData patientdto.PatientResponse
+	if err := json.NewDecoder(resp.Body).Decode(&patientData); err != nil {
+		logger.Err(err)
+		response.InternalError(ctx, message.InternalServerError, nil)
+		return
+	}
+	response.Success(ctx, patientData)
 }
 
 func (c *Controller) List(ctx *gin.Context) {
